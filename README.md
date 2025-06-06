@@ -1,62 +1,45 @@
 FusionPDF - Advanced PDF Merger & Splitter 🧩📄
-FusionPDF é uma aplicação desktop feita em Python com Tkinter, que permite mesclar múltiplos arquivos PDF em um único documento e também separar páginas de PDFs facilmente. Ideal para profissionais, estudantes ou qualquer pessoa que trabalha com PDFs no dia a dia.
+FusionPDF is a desktop application built with Python and Tkinter that allows you to merge multiple PDF files into a single document and also split PDF pages into separate files easily and efficiently. Perfect for professionals, students, or anyone who regularly works with PDFs.
 
-📦 Funcionalidades principais
-📁 Adicionar múltiplos arquivos PDF para mesclar
+📦 Key Features
+📁 Add multiple PDF files to merge
 
-❌ Remover arquivos selecionados ou todos da lista
+❌ Remove selected or all files from the list
 
-✂️ Separar páginas específicas de um PDF em arquivos distintos
+✂️ Split specific pages from a PDF into separate files
 
-🗂 Escolher pasta de saída e nome do arquivo final
+🗂 Choose output folder and filename
 
-🔗 Mesclagem automática dos PDFs na ordem selecionada
+🔗 Automatically merges PDFs in the selected order
 
-✅ Interface limpa, simples e intuitiva
+✅ Clean, simple, and intuitive user interface
 
-📝 Barra de status informativa sobre o andamento das operações
+📝 Informative status bar showing operation progress
 
-🚀 Atualizações recentes
-Implementada função para separar PDFs em múltiplos arquivos
+🚀 Recent Updates
+Added PDF splitting functionality
 
-Melhorias gerais de usabilidade e correção de bugs
+General usability improvements and bug fixes
 
-🖥 Captura de tela
 
-[novo_ui_merger](https://github.com/user-attachments/assets/2ddb5f2c-e675-4753-99b8-2be737de67ef)
-
-🛠 Tecnologias usadas!
-
+🛠 Technologies Used
 Python 3.x
 
-Tkinter para GUI
+Tkinter for GUI
 
-PyPDF2 (ou similar) para manipulação de PDFs
+PyPDF2 (or similar) for PDF manipulation
 
-📋 Como usar
-Execute o programa com python fusionpdf.py
+📋 How to Use
+Run the program with python fusionpdf.py
 
-Use os botões para adicionar PDFs ou escolher páginas para separar
+Use the buttons to add PDFs or select pages to split
 
-Configure pasta e nome do arquivo de saída
+Set the output folder and filename
 
-Clique em “Mesclar” ou “Separar” conforme sua necessidade
+Click “Merge” or “Split” as needed
 
-Confira o arquivo gerado na pasta escolhida
+Find the generated files in the selected folder
 
-📄 Licença
-Este projeto está licenciado sob a MIT License.
+📄 License
+This project is licensed under the MIT License.
 
-
-## ⚙️ Requirements
-!
-
-- Python 3.7 or higher
-- Libraries:
-  - `tkinter` (included with Python)
-  - `PyPDF2`
-
-Install PyPDF2 with:
-
-```bash
-pip install PyPDF2
