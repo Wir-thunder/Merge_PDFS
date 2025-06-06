@@ -1,0 +1,26 @@
+# VSCode
+.vscode/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Arquivos temporários / do sistema
+*.log
+*.bak
+*.tmp
+*.DS_Store
+Thumbs.db
+
+# Windows e pastas pessoais
+AppData/
+OneDrive/
+Desktop/
+Downloads/
+*.pdf
+*.csv
+*.db
+*.DAT
+*.LOG*
