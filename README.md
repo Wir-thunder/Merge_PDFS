@@ -1,23 +1,52 @@
- FusionPDF - Advanced PDF Merger 🧩📄
+FusionPDF - Advanced PDF Merger & Splitter 🧩📄
+FusionPDF é uma aplicação desktop feita em Python com Tkinter, que permite mesclar múltiplos arquivos PDF em um único documento e também separar páginas de PDFs facilmente. Ideal para profissionais, estudantes ou qualquer pessoa que trabalha com PDFs no dia a dia.
 
-FusionPDF is a desktop application built with Python and Tkinter that allows you to **merge multiple PDF files** into a single document easily and efficiently. Perfect for professionals, students, or anyone who regularly works with PDFs.
+📦 Funcionalidades principais
+📁 Adicionar múltiplos arquivos PDF para mesclar
 
-## 📦 Features
+❌ Remover arquivos selecionados ou todos da lista
 
-- 📁 Add multiple PDF files
-- ❌ Remove selected or all files
-- 🗂 Choose output folder and filename
-- 🔗 Automatically merges PDFs in the selected order
-- ✅ Clean and intuitive user interface
-- 📝 Informative status bar
+✂️ Separar páginas específicas de um PDF em arquivos distintos
 
----
+🗂 Escolher pasta de saída e nome do arquivo final
 
-## 🖥 Screenshot
-[Captura de tela 2025-06-06 142404](https://github.com/user-attachments/assets/75cc15c4-3cba-4312-ac5d-76490b2064c8)
+🔗 Mesclagem automática dos PDFs na ordem selecionada
 
+✅ Interface limpa, simples e intuitiva
 
----
+📝 Barra de status informativa sobre o andamento das operações
+
+🚀 Atualizações recentes
+Implementada função para separar PDFs em múltiplos arquivos
+
+Melhorias gerais de usabilidade e correção de bugs
+
+🖥 Captura de tela
+
+[novo_ui_merger](https://github.com/user-attachments/assets/2ddb5f2c-e675-4753-99b8-2be737de67ef)
+
+🛠 Tecnologias usadas!
+
+Python 3.x
+
+Tkinter para GUI
+
+PyPDF2 (ou similar) para manipulação de PDFs
+
+📋 Como usar
+Execute o programa com python fusionpdf.py
+
+Use os botões para adicionar PDFs ou escolher páginas para separar
+
+Configure pasta e nome do arquivo de saída
+
+Clique em “Mesclar” ou “Separar” conforme sua necessidade
+
+Confira o arquivo gerado na pasta escolhida
+
+📄 Licença
+Este projeto está licenciado sob a MIT License.
+
 
 ## ⚙️ Requirements
 !
