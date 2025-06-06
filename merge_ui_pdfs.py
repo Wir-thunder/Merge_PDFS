@@ -1,0 +1,165 @@
+import tkinter as tk
+from tkinter import filedialog, messagebox, ttk
+from PyPDF2 import PdfMerger, PdfReader, PdfWriter
+import os
+
+class PDFMergerApp:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("FusionPDF - Gerenciador de PDFs")
+        self.root.geometry("600x450")
+        
+        # Variáveis
+        self.pdf_files = []
+        self.output_filename = tk.StringVar(value="documento_fundido.pdf")
+        
+        # Interface
+        self.create_widgets()
+        
+    def create_widgets(self):
+        # Frame principal
+        main_frame = ttk.Frame(self.root, padding="10")
+        main_frame.pack(fill=tk.BOTH, expand=True)
+        
+        # Lista de arquivos
+        file_frame = ttk.LabelFrame(main_frame, text="Arquivos PDF Selecionados", padding="10")
+        file_frame.pack(fill=tk.BOTH, expand=True, pady=5)
+        
+        self.file_listbox = tk.Listbox(file_frame, selectmode=tk.EXTENDED)
+        self.file_listbox.pack(fill=tk.BOTH, expand=True, side=tk.LEFT)
+        
+        scrollbar = ttk.Scrollbar(file_frame, orient=tk.VERTICAL, command=self.file_listbox.yview)
+        scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+        self.file_listbox.config(yscrollcommand=scrollbar.set)
+        
+        # Botões de controle de arquivos
+        btn_frame = ttk.Frame(main_frame)
+        btn_frame.pack(fill=tk.X, pady=5)
+        
+        ttk.Button(btn_frame, text="Adicionar PDF(s)", command=self.add_files).pack(side=tk.LEFT, padx=5)
+        ttk.Button(btn_frame, text="Remover Selecionado(s)", command=self.remove_files).pack(side=tk.LEFT, padx=5)
+        ttk.Button(btn_frame, text="Limpar Lista", command=self.clear_files).pack(side=tk.LEFT, padx=5)
+        
+        # Controles de saída
+        output_frame = ttk.LabelFrame(main_frame, text="Opções de Saída", padding="10")
+        output_frame.pack(fill=tk.X, pady=5)
+        
+        ttk.Label(output_frame, text="Nome do arquivo de saída:").grid(row=0, column=0, sticky=tk.W)
+        ttk.Entry(output_frame, textvariable=self.output_filename).grid(row=0, column=1, sticky=tk.EW, padx=5)
+        output_frame.columnconfigure(1, weight=1)
+        
+        ttk.Button(output_frame, text="Selecionar Pasta de Saída", command=self.select_output_dir).grid(row=1, column=0, columnspan=2, pady=5, sticky=tk.EW)
+        
+        # Botões de ação
+        ttk.Button(main_frame, text="Fundir PDFs", command=self.merge_pdfs, style="Accent.TButton").pack(fill=tk.X, pady=5)
+        ttk.Button(main_frame, text="Dividir PDF", command=self.split_pdf).pack(fill=tk.X, pady=(0, 10))
+        
+        # Barra de status
+        self.status_var = tk.StringVar(value="Pronto")
+        ttk.Label(main_frame, textvariable=self.status_var, relief=tk.SUNKEN).pack(fill=tk.X, pady=(5,0))
+        
+        # Configurar estilo
+        self.set_styles()
+    
+    def set_styles(self):
+        style = ttk.Style()
+        style.configure("Accent.TButton", foreground="white", background="#0078d7")
+        style.map("Accent.TButton", background=[("active", "#106ebe")])
+    
+    def add_files(self):
+        files = filedialog.askopenfilenames(
+            title="Selecione os arquivos PDF",
+            filetypes=[("Arquivos PDF", "*.pdf"), ("Todos os arquivos", "*.*")]
+        )
+        
+        if files:
+            for file in files:
+                if file not in self.pdf_files:
+                    self.pdf_files.append(file)
+                    self.file_listbox.insert(tk.END, os.path.basename(file))
+            self.update_status(f"{len(files)} arquivo(s) adicionado(s)")
+    
+    def remove_files(self):
+        selected = self.file_listbox.curselection()
+        if selected:
+            for index in reversed(selected):
+                self.pdf_files.pop(index)
+                self.file_listbox.delete(index)
+            self.update_status(f"{len(selected)} arquivo(s) removido(s)")
+    
+    def clear_files(self):
+        self.pdf_files.clear()
+        self.file_listbox.delete(0, tk.END)
+        self.update_status("Lista limpa")
+    
+    def select_output_dir(self):
+        output_dir = filedialog.askdirectory(title="Selecione a pasta de saída")
+        if output_dir:
+            current_filename = os.path.basename(self.output_filename.get())
+            self.output_filename.set(os.path.join(output_dir, current_filename))
+            self.update_status(f"Pasta de saída definida: {output_dir}")
+    
+    def merge_pdfs(self):
+        if not self.pdf_files:
+            messagebox.showwarning("Aviso", "Nenhum arquivo PDF foi selecionado!")
+            return
+        
+        output_path = self.output_filename.get()
+        if not output_path.lower().endswith('.pdf'):
+            output_path += '.pdf'
+        
+        try:
+            merger = PdfMerger()
+            for pdf in self.pdf_files:
+                merger.append(pdf)
+            merger.write(output_path)
+            merger.close()
+            
+            messagebox.showinfo("Sucesso", f"PDFs fundidos com sucesso!\nArquivo salvo em:\n{output_path}")
+            self.update_status("Fusão concluída com sucesso")
+        except Exception as e:
+            messagebox.showerror("Erro", f"Ocorreu um erro ao fundir os PDFs:\n{str(e)}")
+            self.update_status("Erro durante a fusão")
+    
+    def split_pdf(self):
+        file = filedialog.askopenfilename(
+            title="Selecione um arquivo PDF para dividir",
+            filetypes=[("Arquivos PDF", "*.pdf")]
+        )
+        
+        if not file:
+            return
+        
+        output_dir = filedialog.askdirectory(title="Selecione a pasta para salvar as páginas separadas")
+        if not output_dir:
+            return
+
+        try:
+            reader = PdfReader(file)
+            total_pages = len(reader.pages)
+
+            for i in range(total_pages):
+                writer = PdfWriter()
+                writer.add_page(reader.pages[i])
+
+                output_filename = os.path.join(
+                    output_dir,
+                    f"{os.path.splitext(os.path.basename(file))[0]}_pagina_{i + 1}.pdf"
+                )
+                with open(output_filename, "wb") as f_out:
+                    writer.write(f_out)
+
+            messagebox.showinfo("Sucesso", f"{total_pages} página(s) salvas separadamente em:\n{output_dir}")
+            self.update_status("PDF dividido com sucesso")
+        except Exception as e:
+            messagebox.showerror("Erro", f"Erro ao dividir o PDF:\n{str(e)}")
+            self.update_status("Erro durante a divisão")
+    
+    def update_status(self, message):
+        self.status_var.set(message)
+        self.root.after(5000, lambda: self.status_var.set("Pronto") if message != "Pronto" else None)
+
+if __name__ == "__main__":
+    root = tk.Tk()
+    app = PDFMergerApp(root)
+    root.mainloop()
